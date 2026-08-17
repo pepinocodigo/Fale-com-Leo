@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fale com Léo!</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sky: #cdeaf7;
+    --sky-deep: #9fd8ef;
+    --leaf: #4f9d69;
+    --leaf-dark: #326b45;
+    --sun: #ffc94d;
+    --cream: #fff8ea;
+    --ink: #2c3e2e;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Nunito', sans-serif;
+    background: radial-gradient(circle at 50% -10%, var(--sky) 0%, var(--sky-deep) 55%, #7cc4e0 100%);
+    overflow: hidden;
+    position: relative;
+    color: var(--ink);
+  }
+
+  /* clouds */
+  .cloud {
+    position: absolute;
+    background: #ffffff;
+    border-radius: 50%;
+    opacity: 0.85;
+    filter: blur(0.5px);
+  }
+  .cloud::before, .cloud::after {
+    content: "";
+    position: absolute;
+    background: #ffffff;
+    border-radius: 50%;
+  }
+  .c1 { width: 90px; height: 40px; top: 12%; left: 8%; animation: drift 40s linear infinite; }
+  .c1::before { width: 55px; height: 55px; top: -25px; left: 10px; }
+  .c1::after { width: 40px; height: 40px; top: -15px; left: 50px; }
+  .c2 { width: 70px; height: 30px; top: 22%; right: 10%; animation: drift 55s linear infinite reverse; }
+  .c2::before { width: 40px; height: 40px; top: -18px; left: 8px; }
+  .c2::after { width: 30px; height: 30px; top: -10px; left: 38px; }
+  @keyframes drift {
+    from { transform: translateX(-20px); }
+    to { transform: translateX(20px); }
+  }
+
+  /* hill */
+  .hill {
+    position: absolute;
+    bottom: -10%;
+    left: -10%;
+    width: 120%;
+    height: 30%;
+    background: var(--leaf);
+    border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  }
+  .hill::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--leaf-dark);
+    border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+    clip-path: polygon(0 40%, 100% 15%, 100% 100%, 0 100%);
+    opacity: 0.5;
+  }
+
+  main {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 22px;
+    padding: 40px 28px 56px;
+    text-align: center;
+  }
+
+  .branch {
+    width: 210px;
+    height: 210px;
+    border-radius: 50%;
+    background: var(--cream);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 18px 40px rgba(50, 107, 69, 0.28), inset 0 0 0 6px #ffffff;
+    overflow: hidden;
+    animation: bob 3.5s ease-in-out infinite;
+  }
+  .branch img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  @keyframes bob {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+
+  h1 {
+    font-family: 'Baloo 2', sans-serif;
+    font-weight: 800;
+    font-size: clamp(2rem, 6vw, 2.8rem);
+    color: var(--leaf-dark);
+    margin: 0;
+    text-shadow: 0 2px 0 rgba(255,255,255,0.6);
+  }
+
+  p.sub {
+    margin: -12px 0 6px;
+    font-weight: 600;
+    color: var(--ink);
+    opacity: 0.75;
+    max-width: 260px;
+  }
+
+  .mic-wrap {
+    position: relative;
+    width: 120px;
+    height: 120px;
+  }
+
+  .mic-btn {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: none;
+    background: var(--sun);
+    box-shadow: 0 10px 24px rgba(200, 140, 10, 0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 0;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .mic-btn img {
+    width: 54px;
+    height: 54px;
+    object-fit: contain;
+    pointer-events: none;
+  }
+  .mic-btn:hover { transform: scale(1.05); }
+  .mic-btn:active { transform: scale(0.96); }
+
+  .mic-btn.listening {
+    background: #ff9f4d;
+    animation: pulse 1s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0% { box-shadow: 0 10px 24px rgba(200,140,10,0.35), 0 0 0 0 rgba(255,159,77,0.6); }
+    70% { box-shadow: 0 10px 24px rgba(200,140,10,0.35), 0 0 0 22px rgba(255,159,77,0); }
+    100% { box-shadow: 0 10px 24px rgba(200,140,10,0.35), 0 0 0 0 rgba(255,159,77,0); }
+  }
+
+  .status {
+    min-height: 22px;
+    font-weight: 700;
+    color: var(--leaf-dark);
+    font-size: 0.95rem;
+  }
+
+  .singing .branch { animation: singBob 0.4s ease-in-out infinite; }
+  @keyframes singBob {
+    0%, 100% { transform: translateY(0) rotate(-1deg); }
+    50% { transform: translateY(-10px) rotate(1deg); }
+  }
+</style>
+</head>
+<body>
+
+  <div class="cloud c1"></div>
+  <div class="cloud c2"></div>
+  <div class="hill"></div>
+
+  <main id="scene">
+    <div class="branch" id="branch">
+      <img src="Leo.png" alt="Foto do pássaro Léo">
+    </div>
+
+    <h1>fale com Léo!</h1>
+    <p class="sub">Toque no microfone e diga algo — Léo vai responder cantando.</p>
+
+    <div class="mic-wrap">
+      <button class="mic-btn" id="micBtn" aria-label="Falar com Léo">
+        <img src="Microfone.png" alt="Ícone de microfone">
+      </button>
+    </div>
+
+    <div class="status" id="status"></div>
+  </main>
+
+  <audio id="leoSong" src="LeoCantor.mp3"></audio>
+
+  <script>
+    const micBtn = document.getElementById('micBtn');
+    const status = document.getElementById('status');
+    const leoSong = document.getElementById('leoSong');
+    const scene = document.getElementById('scene');
+
+    let listening = false;
+
+    micBtn.addEventListener('click', () => {
+      if (listening) return;
+      listening = true;
+      micBtn.classList.add('listening');
+      status.textContent = 'Ouvindo...';
+
+      setTimeout(() => {
+        micBtn.classList.remove('listening');
+        status.textContent = 'Léo está cantando!';
+        scene.classList.add('singing');
+
+        leoSong.currentTime = 0;
+        leoSong.play();
+      }, 1200);
+    });
+
+    leoSong.addEventListener('ended', () => {
+      status.textContent = '';
+      scene.classList.remove('singing');
+      listening = false;
+    });
+  </script>
+
+</body>
+</html>
